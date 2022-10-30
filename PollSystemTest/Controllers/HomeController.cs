@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
-using WebTestApplication1.Models;
+using PollSystemTest.Models;
 
-namespace WebTestApplication1.Controllers
+namespace PollSystemTest.Controllers
 {
     public class HomeController : Controller
     {

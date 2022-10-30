@@ -1,4 +1,4 @@
-namespace WebTestApplication1.Models
+namespace PollSystemTest.Models
 {
     public class ErrorViewModel
     {
