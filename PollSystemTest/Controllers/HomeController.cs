@@ -13,9 +13,34 @@ namespace PollSystemTest.Controllers
             _logger = logger;
         }
 
-        public ViewResult Index(int? id)
+        public IActionResult Index(int? id)
         {
             return View(id);
+        }
+
+        [HttpGet]
+        public IActionResult Reply()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult Reply(Answer answer)
+        {
+            if (ModelState.IsValid)
+            {
+                Repository.AddAnswer(answer);
+                return View("Thanks");
+            }
+            else
+            {
+                return View(answer);
+            }
+        }
+
+        public IActionResult Result()
+        {
+            return View(Repository.Answers);
         }
 
         public IActionResult Privacy()
