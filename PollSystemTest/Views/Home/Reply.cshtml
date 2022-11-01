@@ -3,14 +3,17 @@
     ViewData["Title"] = "Answer Page - PollSystem";
 }
 
-<!DOCTYPE html>
+<style>
+    .input-validation-error {
+        border-color: #dc3545;
+        padding-right: calc(1.5em + 0.75rem);
+        background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12' width='12' height='12' fill='none' stroke='%23dc3545'%3e%3ccircle cx='6' cy='6' r='4.5'/%3e%3cpath stroke-linejoin='round' d='M5.8 3.6h.4L6 6.5z'/%3e%3ccircle cx='6' cy='8.2' r='.6' fill='%23dc3545' stroke='none'/%3e%3c/svg%3e");
+        background-repeat: no-repeat;
+        background-position: right calc(0.375em + 0.1875rem) center;
+        background-size: calc(0.75em + 0.375rem) calc(0.75em + 0.375rem);
+    }
 
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title><h1>@ViewData["Title"]</h1></title>
-    <style>
-        .input-validation-error{
+        .input-validation-error + label {
             border-color: #dc3545;
             padding-right: calc(1.5em + 0.75rem);
             background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12' width='12' height='12' fill='none' stroke='%23dc3545'%3e%3ccircle cx='6' cy='6' r='4.5'/%3e%3cpath stroke-linejoin='round' d='M5.8 3.6h.4L6 6.5z'/%3e%3ccircle cx='6' cy='8.2' r='.6' fill='%23dc3545' stroke='none'/%3e%3c/svg%3e");
@@ -18,69 +21,55 @@
             background-position: right calc(0.375em + 0.1875rem) center;
             background-size: calc(0.75em + 0.375rem) calc(0.75em + 0.375rem);
         }
+</style>
 
-        .input-validation-error + label{
-            border-color: #dc3545;
-            padding-right: calc(1.5em + 0.75rem);
-            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12' width='12' height='12' fill='none' stroke='%23dc3545'%3e%3ccircle cx='6' cy='6' r='4.5'/%3e%3cpath stroke-linejoin='round' d='M5.8 3.6h.4L6 6.5z'/%3e%3ccircle cx='6' cy='8.2' r='.6' fill='%23dc3545' stroke='none'/%3e%3c/svg%3e");
-            background-repeat: no-repeat;
-            background-position: right calc(0.375em + 0.1875rem) center;
-            background-size: calc(0.75em + 0.375rem) calc(0.75em + 0.375rem);
-        }
-    </style>
-</head>
-<body>
-    <h1>Would you have the courage to take a one-way trip to Mars?</h1>
-    <h4>Fill in the fields and mark your answer.</h4>
-    <hr />
-    <div class="row">
-        <div class="col-12 col-md-4">
-            <div asp-validation-summary="All"></div>
-            <form method="POST">
-                <div class="form-group">
-                    <label asp-for="Name" class="control-label">Your Name:</label>
-                    <input asp-for="Name" class="form-control" />
+<h1>Would you have the courage to take a one-way trip to Mars?</h1>
+<h4>Fill in the fields and mark your answer.</h4>
+<hr />
+<div class="row">
+    <div class="col-12 col-md-4">
+        @*<div asp-validation-summary="All"></div>*@
+        <form method="POST">
+            <div class="form-group">
+                <label asp-for="Name" class="control-label">Your Name:</label>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+
+            <br />
+
+            <div class="form-group">
+                <label asp-for="Email" class="control-label">Your E-mail:</label>
+                <input asp-for="Email" class="form-control" />
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+
+            <fieldset class="form-group">
+                <legend style="font-size: 20px;" class="mt-4">Your answer:</legend>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" asp-for="Yes" id="optionsRadios1" value="true">
+                    <label class="form-check-label" for="optionsRadios1">
+                        Yes
+                    </label>
                 </div>
-
-                <br />
-
-                <div class="form-group">
-                    <label asp-for="Email" class="control-label">Your E-mail:</label>
-                    <input asp-for="Email" class="form-control" />
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" asp-for="Yes" id="optionsRadios2" value="false">
+                    <label class="form-check-label" for="optionsRadios2">
+                        No
+                    </label>
                 </div>
-
-                <fieldset class="form-group">
-                    <legend style="font-size: 20px;" class="mt-4">Your answer:</legend>
-                    <div class="form-check">
-                        <input class="form-check-input" type="radio" asp-for="Yes" id="optionsRadios1" value="true">
-                        <label class="form-check-label" for="optionsRadios1">
-                            Yes
-                        </label>
-                    </div>
-                    <div class="form-check">
-                        <input class="form-check-input" type="radio" asp-for="Yes" id="optionsRadios2" value="false">
-                        <label class="form-check-label" for="optionsRadios2">
-                            No
-                        </label>
-                    </div>
-                </fieldset>
-                <br />
-                <div class="form-group text-center">
-                    <input type="submit" value="Send" class="btn btn-success" /> |
-                    <a asp-action="Index" class="btn btn-secondary">Back to List</a>
-                </div>
-            </form>
-        </div>
+                <span asp-validation-for="Yes" class="text-danger"></span>
+            </fieldset>
+            <br />
+            <div class="form-group text-center">
+                <input type="submit" value="Send" class="btn btn-success" /> |
+                <a asp-action="Index" class="btn btn-secondary">Back to List</a>
+            </div>
+        </form>
     </div>
-    @*<div class="form-group has-success">
-        <label class="form-label mt-4" for="inputValid">Valid input</label>
-        <input type="text" value="correct value" class="form-control is-valid" id="inputValid">
-        <div class="valid-feedback">Success! You've done it.</div>
-    </div>
-    <div class="form-group has-danger">
-        <label class="form-label mt-4" for="inputInvalid">Invalid input</label>
-        <input type="text" value="wrong value" class="form-control is-invalid" id="inputInvalid">
-        <div class="invalid-feedback">Sorry, that username's taken. Try another?</div>
-    </div>*@
-</body>
-</html>
+</div>
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    }

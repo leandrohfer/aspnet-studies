@@ -1,0 +1,40 @@
+﻿@model IEnumerable<User>
+@{
+    ViewData["Title"] = "User";
+}
+
+<div class="text-center">
+    <h1>CRUD of users in memory.</h1>
+    <h4>Select the desired option.</h4>
+</div>
+<div>
+
+    <div class="row">
+        <table class="table table-hover w-75" style="margin:auto;">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>E-mail</th>
+                    <th class="text-center">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (User user in Model)
+                {
+                    <tr>
+                        <td>@user.Name</td>
+                        <td>@user.Email</td>
+                        <td class="text-center">
+                            <a asp-action="Registration" asp-route-id="@user.Id" class="btn btn-secondary">Update</a> |
+                            <a asp-action="Delete" asp-route-id="@user.Id" class="btn btn-danger">Delete</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+    <br />
+    <div class="text-center">
+        <a asp-action="Registration" class="btn btn-success">Registration of a new User</a>
+    </div>
+</div>
