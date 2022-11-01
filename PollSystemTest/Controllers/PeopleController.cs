@@ -8,6 +8,7 @@ namespace PollSystemTest.Controllers
     {
         public IActionResult Index()
         {
+            ViewBag.CountList = Repository.ListUsers.Count();
             return View(Repository.ListUsers);
         }
 
