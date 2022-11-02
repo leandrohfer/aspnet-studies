@@ -49,7 +49,11 @@ namespace PollSystemTest.Controllers
             var userexists = Repository.ListUsers.SingleOrDefault(u => u.Id == user.Id);
             if (userexists != null)
             {
-                Repository.Delete(user.Id);
+                TempData["StatusDelete"] = Repository.Delete(user.Id);
+            }
+            else
+            {
+                TempData["StatusDelete"] = false;
             }
             return RedirectToAction("Index");
         }

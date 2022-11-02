@@ -3,39 +3,67 @@
     ViewData["Title"] = "User";
 }
 
-<div class="text-center">
+<div class="row text-center">
     <h1>CRUD of users in memory.</h1>
     <h4>Select the desired option.</h4>
     <h4>Number of registered users: @ViewBag.CountList</h4>
 </div>
-<div>
-
-    <div class="row">
-        <table class="table table-hover w-75" style="margin:auto;">
-            <thead>
+<div class="row">
+    <table class="table table-hover w-75" style="margin:auto;">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>E-mail</th>
+                <th class="text-center">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (User user in Model)
+            {
                 <tr>
-                    <th>Name</th>
-                    <th>E-mail</th>
-                    <th class="text-center">Actions</th>
+                    <td>@user.Name</td>
+                    <td>@user.Email</td>
+                    <td class="text-center">
+                        <a asp-action="Registration" asp-route-id="@user.Id" class="btn btn-secondary">Update</a> |
+                        <a asp-action="Delete" asp-route-id="@user.Id" class="btn btn-danger">Delete</a>
+                    </td>
                 </tr>
-            </thead>
-            <tbody>
-                @foreach (User user in Model)
-                {
-                    <tr>
-                        <td>@user.Name</td>
-                        <td>@user.Email</td>
-                        <td class="text-center">
-                            <a asp-action="Registration" asp-route-id="@user.Id" class="btn btn-secondary">Update</a> |
-                            <a asp-action="Delete" asp-route-id="@user.Id" class="btn btn-danger">Delete</a>
-                        </td>
-                    </tr>
-                }
-            </tbody>
-        </table>
-    </div>
-    <br />
+            }
+        </tbody>
+    </table>
+</div>
+<br />
+<div class="row">
     <div class="text-center">
         <a asp-action="Registration" class="btn btn-success">Registration of a new User</a>
     </div>
 </div>
+<br />
+
+@if (TempData.ContainsKey("StatusDelete"))
+{
+    var status = (bool)TempData["StatusDelete"];
+    if (status)
+    {
+        <div class="row">
+            <div class="col-4" style="margin:auto;">
+                <div class="alert alert-dismissible alert-success">
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                    <strong>Well done!</strong> User was successfully <strong>deleted</strong>.
+                </div>
+            </div>
+        </div>
+    }
+    else
+    {
+        <div class="row">
+            <div class="col-4" style="margin:auto;">
+                <div class="alert alert-dismissible alert-danger">
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                    <strong>Error!</strong> User was not successfully <strong>deleted</strong>.
+                </div>
+            </div>
+        </div>
+    }
+}
+

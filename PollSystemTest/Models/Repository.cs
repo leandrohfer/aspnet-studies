@@ -69,13 +69,14 @@
                 Repository._listUsers.Add(user);
             }
         }
-        public static void Delete(int id)
+        public static bool Delete(int id)
         {
             var userexist = Repository._listUsers.Find(u => u.Id == id);
             if (userexist != null)
             {
-                Repository._listUsers.Remove(userexist);
+                return Repository._listUsers.Remove(userexist);
             }
+            return false;
         }
 
         public static void AddAnswer(Answer answer)
