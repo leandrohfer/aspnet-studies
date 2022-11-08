@@ -36,12 +36,13 @@ namespace InventoryControlSystemTest.Controllers
             return View(new CategoryModel());
         }
 
-        private bool CategoryExist (int id)
+        private bool CategoryExist(int id)
         {
             return _context.Categories.Any(cat => cat.IdCategory == id);
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Insert(int? id, [FromForm] CategoryModel category)
         {
             if (ModelState.IsValid)
@@ -75,7 +76,7 @@ namespace InventoryControlSystemTest.Controllers
                     else
                     {
                         TempData["message"] = MessageModel.Serialize("Error changing category!", TypeMessage.Error);
-                    } 
+                    }
                 }
                 return RedirectToAction(nameof(Index));
             }
@@ -91,19 +92,45 @@ namespace InventoryControlSystemTest.Controllers
             if (id.HasValue)
             {
                 var category = await _context.Categories.FindAsync(id);
-                if (category == null)
+                if (category != null)
                 {
-                    return NotFound();
+                    return View(category);
                 }
                 else
                 {
-                    TempData["message"] = MessageModel.Serialize("This category does not exist.", TypeMessage.Error);
+                    TempData["message"] = MessageModel.Serialize("Category not found.", TypeMessage.Error);
                     return RedirectToAction(nameof(Index));
                 }
             }
             else
             {
                 TempData["message"] = MessageModel.Serialize("There is no category selected for deletion.", TypeMessage.Error);
+                return RedirectToAction(nameof(Index));
+            }
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Delete(int id)
+        {
+
+            var category = await _context.Categories.FindAsync(id);
+            if (category != null)
+            {
+                _context.Categories.Remove(category);
+                if (await _context.SaveChangesAsync() > 0)
+                {
+                    TempData["message"] = MessageModel.Serialize("Category deleted successfully!");
+                }
+                else
+                {
+                    TempData["message"] = MessageModel.Serialize("Error deleting category!", TypeMessage.Error);
+                }
+                return RedirectToAction(nameof(Index));
+            }
+            else
+            {
+                TempData["message"] = MessageModel.Serialize("Category not found!", TypeMessage.Error);
                 return RedirectToAction(nameof(Index));
             }
         }
