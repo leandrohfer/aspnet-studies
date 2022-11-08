@@ -39,7 +39,7 @@ namespace PollSystemTest.Controllers
             {
                 return View(userexists);
             }
-            return View();
+            return RedirectToAction(nameof(Index));
         }
 
         [HttpPost]
