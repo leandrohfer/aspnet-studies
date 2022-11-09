@@ -19,150 +19,130 @@ namespace InventoryControlSystemTest.Controllers
             _context = context;
         }
 
-        // GET: Product
         public async Task<IActionResult> Index()
         {
-            var inventoryControlSystemTestContext = _context.Products.Include(p => p.Category);
-            return View(await inventoryControlSystemTestContext.ToListAsync());
+            return View(await _context.Products.OrderBy(c => c.Name).Include(p => p.Category)
+                .AsNoTracking().ToListAsync());
         }
 
-        // GET: Product/Details/5
-        public async Task<IActionResult> Details(int? id)
+        [HttpGet]
+        public async Task<IActionResult> Insert(int? id)
         {
-            if (id == null || _context.Products == null)
+            var categories = _context.Categories.OrderBy(x => x.Name).AsNoTracking().ToList();
+            var categoriesSelectList = new SelectList(categories, nameof(CategoryModel.IdCategory), nameof(CategoryModel.Name));
+
+            ViewBag.Categories = categoriesSelectList;
+
+            if (id.HasValue)
             {
-                return NotFound();
-            }
-
-            var productModel = await _context.Products
-                .Include(p => p.Category)
-                .FirstOrDefaultAsync(m => m.IdProduct == id);
-            if (productModel == null)
-            {
-                return NotFound();
-            }
-
-            return View(productModel);
-        }
-
-        // GET: Product/Create
-        public IActionResult Create()
-        {
-            ViewData["IdCategoria"] = new SelectList(_context.Categories, "IdCategory", "Name");
-            return View();
-        }
-
-        // POST: Product/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("IdProduct,Name,Quantity,Price,IdCategoria")] ProductModel productModel)
-        {
-            if (ModelState.IsValid)
-            {
-                _context.Add(productModel);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
-            }
-            ViewData["IdCategoria"] = new SelectList(_context.Categories, "IdCategory", "Name", productModel.IdCategoria);
-            return View(productModel);
-        }
-
-        // GET: Product/Edit/5
-        public async Task<IActionResult> Edit(int? id)
-        {
-            if (id == null || _context.Products == null)
-            {
-                return NotFound();
-            }
-
-            var productModel = await _context.Products.FindAsync(id);
-            if (productModel == null)
-            {
-                return NotFound();
-            }
-            ViewData["IdCategoria"] = new SelectList(_context.Categories, "IdCategory", "Name", productModel.IdCategoria);
-            return View(productModel);
-        }
-
-        // POST: Product/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("IdProduct,Name,Quantity,Price,IdCategoria")] ProductModel productModel)
-        {
-            if (id != productModel.IdProduct)
-            {
-                return NotFound();
-            }
-
-            if (ModelState.IsValid)
-            {
-                try
+                var product = await _context.Products.FindAsync(id);
+                if (product == null)
                 {
-                    _context.Update(productModel);
-                    await _context.SaveChangesAsync();
+                    return NotFound();
                 }
-                catch (DbUpdateConcurrencyException)
+                return View(product);
+            }
+            return View(new ProductModel());
+        }
+
+        private bool ProductExist(int id)
+        {
+            return _context.Products.Any(cat => cat.IdProduct == id);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Insert(int? id, [FromForm] ProductModel product)
+        {
+            if (ModelState.IsValid)
+            {
+                if (id.HasValue)
                 {
-                    if (!ProductModelExists(productModel.IdProduct))
+                    if (ProductExist(id.Value))
                     {
-                        return NotFound();
+                        _context.Products.Update(product);
+                        if (await _context.SaveChangesAsync() > 0)
+                        {
+                            TempData["message"] = MessageModel.Serialize("Product successfully changed!");
+                        }
+                        else
+                        {
+                            TempData["message"] = MessageModel.Serialize("Error changing product!", TypeMessage.Error);
+                        }
                     }
                     else
                     {
-                        throw;
+                        TempData["message"] = MessageModel.Serialize("Product not found!", TypeMessage.Error);
+                    }
+                }
+                else
+                {
+                    _context.Products.Add(product);
+                    if (await _context.SaveChangesAsync() > 0)
+                    {
+                        TempData["message"] = MessageModel.Serialize("Product registered successfully!");
+                    }
+                    else
+                    {
+                        TempData["message"] = MessageModel.Serialize("Error when registering product!", TypeMessage.Error);
                     }
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["IdCategoria"] = new SelectList(_context.Categories, "IdCategory", "Name", productModel.IdCategoria);
-            return View(productModel);
+            else
+            {
+                return View(product);
+            }
         }
 
-        // GET: Product/Delete/5
+        [HttpGet]
         public async Task<IActionResult> Delete(int? id)
         {
-            if (id == null || _context.Products == null)
+            if (id.HasValue)
             {
-                return NotFound();
+                var product = await _context.Products.FindAsync(id);
+                var category = _context.Categories.FindAsync(product.IdCategoria);
+                ViewBag.category = category;
+                if (product != null)
+                {
+                    return View(product);
+                }
+                else
+                {
+                    TempData["message"] = MessageModel.Serialize("Product not found.", TypeMessage.Error);
+                    return RedirectToAction(nameof(Index));
+                }
             }
-
-            var productModel = await _context.Products
-                .Include(p => p.Category)
-                .FirstOrDefaultAsync(m => m.IdProduct == id);
-            if (productModel == null)
+            else
             {
-                return NotFound();
+                TempData["message"] = MessageModel.Serialize("There is no product selected for deletion.", TypeMessage.Error);
+                return RedirectToAction(nameof(Index));
             }
-
-            return View(productModel);
         }
 
-        // POST: Product/Delete/5
-        [HttpPost, ActionName("Delete")]
+        [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+        public async Task<IActionResult> Delete(int id)
         {
-            if (_context.Products == null)
+            var product = await _context.Products.FindAsync(id);
+            if (product != null)
             {
-                return Problem("Entity set 'InventoryControlSystemTestContext.Products'  is null.");
+                _context.Products.Remove(product);
+                if (await _context.SaveChangesAsync() > 0)
+                {
+                    TempData["message"] = MessageModel.Serialize("Product deleted successfully!");
+                }
+                else
+                {
+                    TempData["message"] = MessageModel.Serialize("Error deleting product!", TypeMessage.Error);
+                }
             }
-            var productModel = await _context.Products.FindAsync(id);
-            if (productModel != null)
+            else
             {
-                _context.Products.Remove(productModel);
+                TempData["message"] = MessageModel.Serialize("Product not found!", TypeMessage.Error);
             }
-            
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
-        }
 
-        private bool ProductModelExists(int id)
-        {
-          return _context.Products.Any(e => e.IdProduct == id);
+            return RedirectToAction(nameof(Index));
         }
     }
 }

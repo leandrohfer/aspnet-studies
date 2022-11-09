@@ -71,11 +71,11 @@ namespace InventoryControlSystemTest.Controllers
                     _context.Categories.Add(category);
                     if (await _context.SaveChangesAsync() > 0)
                     {
-                        TempData["message"] = MessageModel.Serialize("Category successfully changed!");
+                        TempData["message"] = MessageModel.Serialize("Category registered successfully!");
                     }
                     else
                     {
-                        TempData["message"] = MessageModel.Serialize("Error changing category!", TypeMessage.Error);
+                        TempData["message"] = MessageModel.Serialize("Error when registering category!", TypeMessage.Error);
                     }
                 }
                 return RedirectToAction(nameof(Index));
