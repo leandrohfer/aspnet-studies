@@ -32,7 +32,15 @@ namespace MinhaAppVS.Controllers
         [Route("politica-de-privacidade")]
         public IActionResult Privacy()
         {
-            return View();
+            return Json("{'nome':'Leandro'}");
+        }
+
+        [Route("sobre")]
+        public IActionResult About()
+        {
+            var fileBytes = System.IO.File.ReadAllBytes(@"C:\novo1765.txt");
+            var fileName = "teste.txt";
+            return File(fileBytes, System.Net.Mime.MediaTypeNames.Application.Octet, fileName);
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
