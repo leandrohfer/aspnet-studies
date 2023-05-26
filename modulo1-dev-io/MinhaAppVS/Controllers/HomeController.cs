@@ -18,21 +18,40 @@ namespace MinhaAppVS.Controllers
         public HomeController(ILogger<HomeController> logger)
         {
             _logger = logger;
-        }
+        }   
 
         [Route("")]
         [Route("pagina-inicial")]
         [Route("pagina-inicial/{id:int}/{categoria:guid}")]
         public IActionResult Index(int id, Guid categoria)
         {
-            return View();
+            var filme = new Filme()
+            {
+                Titulo = "Oi",
+                DataLancamento = DateTime.Now,
+                Genero = null,
+                Avaliacao = 10,
+                Preco = 20000,
+            };
+
+            return RedirectToAction("Privacy", filme);
+            //return View();
         }
 
         [Route("privacidade")]
         [Route("politica-de-privacidade")]
-        public IActionResult Privacy()
+        public IActionResult Privacy(Filme filme)
         {
-            return Json("{'nome':'Leandro'}");
+            if (ModelState.IsValid)
+            {
+            }
+
+            foreach (var error in ModelState.Values.SelectMany(m => m.Errors))
+            {
+                Console.WriteLine(error.ErrorMessage);
+            }
+
+            return View();
         }
 
         [Route("sobre")]
