@@ -34,8 +34,8 @@ namespace MinhaAppVS.Controllers
                 Preco = 20000,
             };
 
-            return RedirectToAction("Privacy", filme);
-            //return View();
+            //return RedirectToAction("Privacy", filme);
+            return View();
         }
 
         [Route("privacidade")]
