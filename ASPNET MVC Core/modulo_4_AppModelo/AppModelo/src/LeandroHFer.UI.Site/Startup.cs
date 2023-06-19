@@ -34,6 +34,7 @@ namespace LeandroHFer.UI.Site
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute("default","{controller=Home}/{action=Index}/{id?}");
+                endpoints.MapControllerRoute("areas", "{area:exists}/{controller=Home}/{action=Index}/{id?}");
             });
         }
     }
