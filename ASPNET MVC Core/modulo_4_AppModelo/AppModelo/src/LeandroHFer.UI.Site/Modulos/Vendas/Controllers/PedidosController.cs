@@ -1,9 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 
-namespace LeandroHFer.UI.Site.Areas.Produtos.Controllers
+namespace LeandroHFer.UI.Site.Modulos.Vendas.Controllers
 {
-    [Area("Produtos")]
-    public class CadastroController : Controller
+    [Area("Vendas")]
+    public class PedidosController : Controller
     {
         public IActionResult Index()
         {
