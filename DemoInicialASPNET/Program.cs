@@ -1,5 +1,6 @@
-// Configuração do Builder
+using Serilog;
 
+// Configuração do Builder
 using DemoInicialASPNET;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -9,14 +10,14 @@ var builder = WebApplication.CreateBuilder(args);
 // Middlewares
 
 // Services 
-
+builder.AddSerilog();
 
 // Configuração da App
 
 var app = builder.Build();
 
 // Configuração de Comportamentos da App
-app.UseMiddleware<LogTempoMiddleware>();
+app.UseLogTempo();
 
 app.MapGet("/", () => "Hello World!");
 
