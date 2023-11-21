@@ -3,28 +3,31 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace DemoInicialMVC.Controllers
 {
+    [Route("/", Order = 0)]
+    [Route("meu-site", Order = 1)]
+    [Route("gestao-site", Order = 2)]
     public class TestesController : Controller
     {
-        // GET: Testes
+        // Não é repassado a rota desta Action para mantê-la como
+        // padrão ao chamar a Controller
         public ActionResult Index()
         {
             return View();
         }
 
-        // GET: Testes/Details/5
+        [HttpGet("detalhes/{id:int}")]
         public ActionResult Details(int id)
         {
             return View();
         }
 
-        // GET: Testes/Create
+        [HttpGet("novo")]
         public ActionResult Create()
         {
             return View();
         }
 
-        // POST: Testes/Create
-        [HttpPost]
+        [HttpPost("novo")]
         [ValidateAntiForgeryToken]
         public ActionResult Create(IFormCollection collection)
         {
@@ -38,14 +41,13 @@ namespace DemoInicialMVC.Controllers
             }
         }
 
-        // GET: Testes/Edit/5
+        [HttpGet("editar/{id:int}")]
         public ActionResult Edit(int id)
         {
             return View();
         }
 
-        // POST: Testes/Edit/5
-        [HttpPost]
+        [HttpPost("editar/{id:int}")]
         [ValidateAntiForgeryToken]
         public ActionResult Edit(int id, IFormCollection collection)
         {
@@ -59,14 +61,13 @@ namespace DemoInicialMVC.Controllers
             }
         }
 
-        // GET: Testes/Delete/5
+        [HttpGet("excluir/{id:int}")]
         public ActionResult Delete(int id)
         {
             return View();
         }
 
-        // POST: Testes/Delete/5
-        [HttpPost]
+        [HttpPost("excluir/{id:int}")]
         [ValidateAntiForgeryToken]
         public ActionResult Delete(int id, IFormCollection collection)
         {

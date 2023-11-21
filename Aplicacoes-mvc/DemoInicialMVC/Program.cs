@@ -20,6 +20,11 @@ app.UseRouting();
 
 app.UseAuthorization();
 
+// Forma ruim de adicionar rotas personalizadas
+/* app.MapControllerRoute(
+    name: "MeuSite",
+    pattern: "{controller=Vendas}/{action=Produto}/{data}/{status}");*/
+
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
