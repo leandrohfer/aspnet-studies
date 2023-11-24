@@ -25,7 +25,7 @@ namespace DemoInicialMVC.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Nome,DataNascimento,Email,EmailConfirmacao,Avaliacao,Ativo")] Aluno aluno)
+        public async Task<IActionResult> Create([Bind("Nome,DataNascimento,Email,EmailConfirmacao,Avaliacao,Ativo")] Aluno aluno)
         {
             _context.Alunos.Add(aluno);
             await _context.SaveChangesAsync();
