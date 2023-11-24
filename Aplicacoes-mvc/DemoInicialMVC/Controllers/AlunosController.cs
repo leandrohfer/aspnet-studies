@@ -1,6 +1,7 @@
 ﻿using DemoInicialMVC.Data;
 using DemoInicialMVC.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace DemoInicialMVC.Controllers
 {
@@ -13,9 +14,9 @@ namespace DemoInicialMVC.Controllers
             _context = context;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View();
+            return View(await _context.Alunos.ToListAsync());
         }
 
         public IActionResult Create()
@@ -28,6 +29,30 @@ namespace DemoInicialMVC.Controllers
         public async Task<IActionResult> Create([Bind("Nome,DataNascimento,Email,EmailConfirmacao,Avaliacao,Ativo")] Aluno aluno)
         {
             _context.Alunos.Add(aluno);
+            await _context.SaveChangesAsync();
+
+            return RedirectToAction(nameof(Index));
+        }
+
+        public async Task<IActionResult> Details(int id)
+        {
+            var aluno = await _context.Alunos.FirstOrDefaultAsync(m => m.Id == id);
+
+            return View(aluno);
+        }
+
+        public async Task<IActionResult> Edit(int id)
+        {
+            var aluno = await _context.Alunos.FindAsync(id);
+
+            return View(aluno);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Nome,DataNascimento,Email,EmailConfirmacao,Avaliacao,Ativo")] Aluno aluno)
+        {
+            _context.Update(aluno);
             await _context.SaveChangesAsync();
 
             return RedirectToAction(nameof(Index));
