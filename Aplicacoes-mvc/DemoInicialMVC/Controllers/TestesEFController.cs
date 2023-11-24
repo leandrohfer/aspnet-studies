@@ -26,7 +26,7 @@ namespace DemoInicialMVC.Controllers
 
             // Insert
             Db.Alunos.Add(aluno);
-            Db.SaveChanges();
+            //Db.SaveChanges();
 
             // Select
             var alunosChange = Db.Alunos.Where(a => a.Nome == "Leandro").FirstOrDefault();
@@ -35,11 +35,11 @@ namespace DemoInicialMVC.Controllers
 
             // Update
             Db.Alunos.Update(alunosChange);
-            Db.SaveChanges();
+            //Db.SaveChanges();
 
             // Delete
             Db.Alunos.Remove(alunosChange);
-            Db.SaveChanges();
+            //Db.SaveChanges();
 
             return Content("Realizado!");
         }
