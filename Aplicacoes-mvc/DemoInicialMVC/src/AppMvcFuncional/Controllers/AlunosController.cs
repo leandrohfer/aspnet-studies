@@ -84,6 +84,8 @@ namespace AppMvcFuncional.Controllers
                 return NotFound();
             }
 
+            ModelState.Remove("EmailConfirmacao");
+
             if (ModelState.IsValid)
             {
                 try
