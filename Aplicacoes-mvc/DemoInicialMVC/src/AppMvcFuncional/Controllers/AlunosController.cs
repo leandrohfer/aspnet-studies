@@ -17,9 +17,11 @@ namespace AppMvcFuncional.Controllers
 
         public async Task<IActionResult> Index()
         {
-              return _context.Aluno != null ? 
-                          View(await _context.Aluno.ToListAsync()) :
-                          Problem("Entity set 'ApplicationDbContext.Aluno'  is null.");
+            ViewBag.Sucesso = "Listagem bem sucedida!";
+
+            return _context.Aluno != null ?
+                        View(await _context.Aluno.ToListAsync()) :
+                        Problem("Entity set 'ApplicationDbContext.Aluno'  is null.");
         }
 
         [Route("{id:int}/Detalhes")]
@@ -104,8 +106,12 @@ namespace AppMvcFuncional.Controllers
                         throw;
                     }
                 }
+
+                TempData["Sucesso"] = "Aluno editado com sucesso!";
+
                 return RedirectToAction(nameof(Index));
             }
+
             return View(aluno);
         }
 
@@ -140,14 +146,14 @@ namespace AppMvcFuncional.Controllers
             {
                 _context.Aluno.Remove(aluno);
             }
-            
+
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool AlunoExists(int id)
         {
-          return (_context.Aluno?.Any(e => e.Id == id)).GetValueOrDefault();
+            return (_context.Aluno?.Any(e => e.Id == id)).GetValueOrDefault();
         }
     }
 }
