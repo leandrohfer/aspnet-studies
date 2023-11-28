@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using AppMvcFuncional.Data;
 using DemoInicialMVC.Models;
@@ -19,7 +14,6 @@ namespace AppMvcFuncional.Controllers
             _context = context;
         }
 
-        // GET: Alunos
         public async Task<IActionResult> Index()
         {
               return _context.Aluno != null ? 
@@ -27,7 +21,6 @@ namespace AppMvcFuncional.Controllers
                           Problem("Entity set 'ApplicationDbContext.Aluno'  is null.");
         }
 
-        // GET: Alunos/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null || _context.Aluno == null)
@@ -45,18 +38,14 @@ namespace AppMvcFuncional.Controllers
             return View(aluno);
         }
 
-        // GET: Alunos/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Alunos/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Nome,DataNascimento,Email,Avaliacao,Ativo")] Aluno aluno)
+        public async Task<IActionResult> Create([Bind("Id,Nome,DataNascimento,Email,EmailConfirmacao,Avaliacao,Ativo")] Aluno aluno)
         {
             if (ModelState.IsValid)
             {
@@ -67,7 +56,6 @@ namespace AppMvcFuncional.Controllers
             return View(aluno);
         }
 
-        // GET: Alunos/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null || _context.Aluno == null)
@@ -83,9 +71,6 @@ namespace AppMvcFuncional.Controllers
             return View(aluno);
         }
 
-        // POST: Alunos/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Id,Nome,DataNascimento,Email,Avaliacao,Ativo")] Aluno aluno)
@@ -118,7 +103,6 @@ namespace AppMvcFuncional.Controllers
             return View(aluno);
         }
 
-        // GET: Alunos/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null || _context.Aluno == null)
@@ -136,7 +120,6 @@ namespace AppMvcFuncional.Controllers
             return View(aluno);
         }
 
-        // POST: Alunos/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
