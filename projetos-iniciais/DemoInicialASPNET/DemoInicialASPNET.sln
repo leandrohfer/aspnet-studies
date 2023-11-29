@@ -5,7 +5,7 @@ VisualStudioVersion = 17.6.33801.468
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DemoInicialASPNET", "DemoInicialASPNET.csproj", "{6634BB90-C70A-4BB4-8EE5-4838E7E69096}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AppMvcFuncional", "..\Aplicacoes-mvc\DemoInicialMVC\src\AppMvcFuncional\AppMvcFuncional.csproj", "{61E70F16-A4FB-4115-9AE6-F547425C489A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AppMvcFuncional", "..\AppMvcFuncional\AppMvcFuncional.csproj", "{61E70F16-A4FB-4115-9AE6-F547425C489A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
