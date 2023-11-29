@@ -2,9 +2,11 @@
 using Microsoft.EntityFrameworkCore;
 using AppMvcFuncional.Data;
 using DemoInicialMVC.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace AppMvcFuncional.Controllers
 {
+    [Authorize] // Apenas usuários logados podem acessar essa Controller
     [Route("meus-alunos")]
     public class AlunosController : Controller
     {
@@ -15,6 +17,8 @@ namespace AppMvcFuncional.Controllers
             _context = context;
         }
 
+        // Exceção
+        [AllowAnonymous] // Disponibiliza essa Action para ela poder ser acessada por usuários não logados
         public async Task<IActionResult> Index()
         {
             ViewBag.Sucesso = "Listagem bem sucedida!";
