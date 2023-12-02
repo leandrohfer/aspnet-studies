@@ -1,34 +1,34 @@
 ﻿<!DOCTYPE html>
-<html>
+<html lang="pt-br">
 <head>
     <title>@ViewData["Title"] - AppMvcSemTemplate</title>
+    <link href="~/lib/font-awesome/css/all.min.css" rel="stylesheet" />
     <link href="~/lib/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
 </head>
 <body>
-    <header class="p-3 mb-3 border-bottom">
-        <div class="container">
-            <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
-                <a href="/" class="d-flex align-items-center mb-2 mb-lg-0 link-body-emphasis text-decoration-none">
-                    <svg class="bi me-2" width="40" height="32" role="img" aria-label="Bootstrap"><use xlink:href="#bootstrap" /></svg>
-                </a>
-
-                <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
-                    <li><a class="nav-link px-2 link-secondary" asp-controller="Home" asp-action="Index">Home</a></li>
-                </ul>
-
-                <div class="dropdown text-end">
-                    <a href="#" class="d-block link-body-emphasis text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                        <img src="https://github.com/mdo.png" alt="mdo" width="32" height="32" class="rounded-circle">
-                    </a>
-                    <ul class="dropdown-menu text-small">
-                        <li><a class="dropdown-item" href="#">New project...</a></li>
-                        <li><a class="dropdown-item" href="#">Settings</a></li>
-                        <li><a class="dropdown-item" href="#">Profile</a></li>
-                        <li><hr class="dropdown-divider"></li>
-                        <li><a class="dropdown-item" href="#">Sign out</a></li>
-                    </ul>
-                </div>
-            </div>
+    <nav class="py-2 bg-body-tertiary border-bottom">
+        <div class="container d-flex flex-wrap">
+            <ul class="nav me-auto">
+                <li class="nav-item"><a class="nav-link link-body-emphasis px-2 active" asp-controller="Home" asp-action="Index">Home</a></li>
+                @* <li class="nav-item"><a class="nav-link link-body-emphasis px-2">Features</a></li>
+                <li class="nav-item"><a class="nav-link link-body-emphasis px-2">Pricing</a></li>
+                <li class="nav-item"><a class="nav-link link-body-emphasis px-2">FAQs</a></li>
+                <li class="nav-item"><a class="nav-link link-body-emphasis px-2">About</a></li> *@
+            </ul>
+            <ul class="nav">
+                <li class="nav-item"><a href="#" class="nav-link link-body-emphasis px-2">Login</a></li>
+                <li class="nav-item"><a href="#" class="nav-link link-body-emphasis px-2">Sign up</a></li>
+            </ul>
+        </div>
+    </nav>
+    <header class="py-3 mb-4 border-bottom">
+        <div class="container d-flex flex-wrap justify-content-center">
+            <a class="d-flex align-items-center mb-3 mb-lg-0 me-lg-auto link-body-emphasis text-decoration-none">
+                <span class="fs-4"><i class="fa-solid fa-code fa-lg"></i> Minha Aplicação MVC do Zero</span>
+            </a>
+            <form class="col-12 col-lg-auto mb-3 mb-lg-0" role="search">
+                <input type="search" class="form-control" placeholder="Search..." aria-label="Search">
+            </form>
         </div>
     </header>
 
@@ -38,21 +38,19 @@
         </main>
     </div>
 
-    <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top">
-        <div class="col-md-4 d-flex align-items-center">
-            <a href="/" class="mb-3 me-2 mb-md-0 text-body-secondary text-decoration-none lh-1">
-                <svg class="bi" width="30" height="24"><use xlink:href="#bootstrap" /></svg>
-            </a>
-            <span class="mb-3 mb-md-0 text-body-secondary">&copy; 2023 Company, Inc</span>
-        </div>
+    <div class="container">
+        <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top">
+            <div class="col-md-4 d-flex align-items-center">
+                <span class="mb-3 mb-md-0 text-body-secondary">&copy; 2023, Leandro Henrique</span>
+            </div>
 
-        <ul class="nav col-md-4 justify-content-end list-unstyled d-flex">
-            <li class="ms-3"><a class="text-body-secondary" href="#"><svg class="bi" width="24" height="24"><use xlink:href="#twitter" /></svg></a></li>
-            <li class="ms-3"><a class="text-body-secondary" href="#"><svg class="bi" width="24" height="24"><use xlink:href="#instagram" /></svg></a></li>
-            <li class="ms-3"><a class="text-body-secondary" href="#"><svg class="bi" width="24" height="24"><use xlink:href="#facebook" /></svg></a></li>
-        </ul>
-    </footer>
+            <ul class="nav col-md-4 justify-content-end list-unstyled d-flex">
+                <li class="ms-3"><a class="text-body-secondary" href="https://github.com/leandrohfer" target="_blank"><i class="fa-brands fa-github fa-lg"></i></a></li>
+            </ul>
+        </footer>
+    </div>
 
-    <script src="~/lib/bootstrap/js/bootstrap.min.js"></script>
+    <script src="~/lib/jquery/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
